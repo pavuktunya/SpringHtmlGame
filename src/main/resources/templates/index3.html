@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add CSS and JS to Thymeleaf</title>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
+</head>
+<body>
+<div id="container">
+    <div id = "world"></div>
+    <div id = "pawn"></div>
+    <div class = "menu" id = "menu1" style = "display:block;">
+        <div id="button1" class="button">
+            <p>Начать игру</p>
+        </div>
+        <div id="button2" class="button">
+            <p>Инструкция</p>
+        </div>
+    </div>
+    <div class = "menu" id = "menu2">
+        <p style="font-size:30px; top:200px">
+            <strong>Управление:</strong> <br>
+            w - вперед <br>
+            s - назад <br>
+            d - вправо <br>
+            a - влево <br>
+            пробел - прыжок <br>
+            !!! Включите английскую раскладку !!!<br>
+            <strong>Задача:</strong> <br>
+            Взять красный квадрат и найти голубой квадрат
+        </p>
+        <div id="button3" class="button">
+            <p>Назад</p>
+        </div>
+    </div>
+    <div class = "menu" id = "menu3">
+        <p id = "result" style="top:100px"></p>
+        <div id="button4" class="button">
+            <p>Вернуться назад</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="../static/js/script.js" th:src="@{/js/script.js}"></script>
+<script src="../static/js/menu.js" th:src="@{/js/menu.js}"></script>
