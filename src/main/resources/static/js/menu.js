@@ -13,10 +13,20 @@ var f = [0];
 var level = 0;
 var score =0;
 
+var widget1 = document.getElementById("widget1");
+var widget2 = document.getElementById("widget2");
+var widget3 = document.getElementById("widget3");
+
 // Настроим переходы
 
 button1.onclick = function(){
+    // Вывод виджетов на экран и их настройка
 
+	widget1.style.display = "block";
+	widget2.style.display = "block";
+	widget1.innerHTML = "<p style='font-size:30px'>Монеты: 0 из " + things.length + " </p>";
+	widget2.innerHTML = "<p style='font-size:30px'>Ключи:0</p>";
+	widget3.innerHTML = "<p style='font-size:40px'>Найдите красный квадрат!</p>";
 	// Присвоение копий массивов
 
 	map = userSlice(mapArray[level]);
@@ -27,16 +37,16 @@ button1.onclick = function(){
 
 	// Создание мира и расстановка предметов
 
-	menu1.style.display = "none";
-	CreateNewWorld(map);
-	pawn.x = start[0][0];
-	pawn.y = start[0][1];
-	pawn.z = start[0][2];
-	pawn.rx = start[0][3];
-	pawn.rx = start[0][4];
-	CreateSquares(things,"thing");
-	CreateSquares(keys,"key");
-	CreateSquares(finish,"finish");
+    	menu1.style.display = "none";
+    	CreateNewWorld(map);
+    	pawn.x = start[0][0];
+    	pawn.y = start[0][1];
+    	pawn.z = start[0][2];
+    	pawn.rx = start[0][3];
+    	pawn.rx = start[0][4];
+    	CreateSquares(things,"thing",false);
+    	CreateSquares(keys,"key",false);
+    	CreateSquares(finish,"finish",false);
 
 	// Запуск игры
 
@@ -71,6 +81,8 @@ function interact(objects,string,num){
 			objects[i][2] = 1000000;
 			document.getElementById(string + i).style.transform =
 			"translate3d(1000000px,1000000px,1000000px)";
+			widget1.innerHTML = "<p style='font-size:30px'>Монеты: " + m[0] + " из " + things.length + " </p>";
+            widget2.innerHTML = "<p style='font-size:30px'>Ключи: " + k[0] + "</p>";
 			num[0]++;
 		};
 	};
@@ -82,7 +94,8 @@ function finishInteract(){
 	let r = (finish[0][0] - pawn.x)**2 + (finish[0][1] - pawn.y)**2 + (finish[0][2] - pawn.z)**2;
 	if(r < (finish[0][7]**2)){
 		if (k[0] == 0){
-			console.log("найдите ключ");
+			widget3.style.display = "block";
+            setTimeout(() => widget3.style.display = "none",5000);
 		}
 		else{
 			clearWorld();
@@ -92,11 +105,22 @@ function finishInteract(){
 			k[0] = 0;
 			m[0] = 0;
 			menu1.style.display = "block";
+
+			//widget1.style.display = «none»;
+            //widget2.style.display = «none»;
+            //widget3.style.display = «none»;
+
 			level++;
-			if(level >= 2){
-				level = 0;
-				score = 0;
-			};
+            canlock = false;
+                                button1.innerHTML = "<p>Продолжить</p>";
+                                if(level >= 2){
+                                    menu1.style.display = "none";
+                                    menu3.style.display = "block";
+                                    document.getElementById("result").innerHTML = "Вы набрали " + score + " очков";
+                                    level = 0;
+                                    score = 0;
+                                    button1.innerHTML = "<p>Начать игру</p>";
+                                };
 		};
 	};
 };
@@ -107,7 +131,10 @@ function repeatFunction(){
 	update();
 	interact(things,"thing",m);
 	interact(keys,"key",k);
-	finishInteract();
+	rotate(things,"thing",0.5);
+	rotate(keys,"key",0.5);
+	rotate(finish,"finish",0.5);
+        finishInteract();
 }
 
 // Пользовательский slice
@@ -121,4 +148,17 @@ function userSlice(array){
 		}
 	}
 	return NewArray;
+}
+
+function rotate(objects,string,wy){
+	for (i = 0; i < objects.length; i++){
+		objects[i][4] = objects[i][4] + wy;
+		document.getElementById(string + i).style.transform = "translate3d(" +
+		(600 - objects[i][6]/2 + objects[i][0]) + "px," +
+		(400 - objects[i][7]/2 + objects[i][1]) + "px," +
+		(objects[i][2]) + "px)" +
+		"rotateX(" + objects[i][3] + "deg)" +
+		"rotateY(" + objects[i][4] + "deg)" +
+		"rotateZ(" + objects[i][5] + "deg)";
+	};
 }

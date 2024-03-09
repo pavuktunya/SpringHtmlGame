@@ -279,6 +279,7 @@ var MouseY = 0;
 
 // Создадим переменные
 
+var sun = [0.48,0.8,0.36];
 var lock = false;
 var onGround = false;
 var container = document.getElementById("container");
@@ -399,7 +400,7 @@ function update(){
 };
 
 function CreateNewWorld(map){
-	CreateSquares(map,"map");
+	CreateSquares(map,"map",true);
 }
 
 function clearWorld(){
@@ -473,7 +474,7 @@ function coorReTransform(x3,y3,z3,rxc,ryc,rzc){
 	return [x0,y0,z0];
 };
 
-function CreateSquares(squares,string){
+function CreateSquares(squares,string,havelight){
 	for (let i = 0; i < squares.length; i++){
 
 		// Создание прямоугольника и придание ему стилей
@@ -483,7 +484,17 @@ function CreateSquares(squares,string){
 		newElement.id = string + i;
 		newElement.style.width = squares[i][6] + "px";
 		newElement.style.height = squares[i][7] + "px";
-		newElement.style.background = squares[i][8];
+		if (havelight){
+			let normal = coorReTransform(0,0,1,squares[i][3],squares[i][4],squares[i][5]);
+			let light = -(normal[0]*sun[0] + normal[1]*sun[1] + normal[2]*sun[2]);
+			if (light < 0){
+				light = 0;
+			};
+			newElement.style.background = "linear-gradient(rgba(0,0,0," + (0.2 - light*0.2) + "),rgba(0,0,0," + (0.2 - light*0.2) + ")), " +  squares[i][8];
+		}
+		else{
+			newElement.style.background = squares[i][8];
+		}
 		newElement.style.transform = "translate3d(" +
 		(600 - squares[i][6]/2 + squares[i][0]) + "px," +
 		(400 - squares[i][7]/2 + squares[i][1]) + "px," +
