@@ -39,6 +39,8 @@ class CustomConfig {
     @Bean
     fun configure(http: HttpSecurity): SecurityFilterChain{
         http.authorizeHttpRequests{requests ->
+            requests.requestMatchers("css/**").permitAll()
+            requests.requestMatchers("js/**").permitAll()
             requests.requestMatchers("admin/**").hasRole("ADMIN")
             requests.anyRequest().authenticated()
         }

@@ -1,3 +1,6 @@
+#body{
+	margin:10px;
+}
 #container{
 	position:absolute;
 	width:1200px;
@@ -9,9 +12,6 @@
 	top:50%;
     left:50%;
     transform: translate(-50%,-50%);
-}
-#body{
-	margin:0px;
 }
 #world{
 	position:absolute;
@@ -105,19 +105,19 @@ p{
 	z-index:300;
 }
 #widget1{
-	top:0px;
+	top:30px;
 	left:0px;
 	width:300px;
 	height:100px;
 }
 #widget2{
-	top:0px;
+	top:30px;
 	right:0px;
 	width:300px;
 	height:100px;
 }
 #widget3{
-	bottom:0px;
+	bottom:30px;
 	left:0px;
 	width:500px;
 	height:200px;
