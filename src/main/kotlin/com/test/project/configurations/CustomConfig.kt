@@ -1,5 +1,7 @@
 package com.test.project.configurations
 
+import com.server.restful_polls.service.impl.UserDetailsServiceImpl
+import com.test.project.components.jwt.JwtRequestFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.Customizer
@@ -11,11 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.provisioning.InMemoryUserDetailsManager
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 
 class SomeService
 
 @Configuration
-class CustomConfig {
+class CustomConfig(
+    private val userDetailsService: UserDetailsServiceImpl,
+    private val jwtRequestFilter: JwtRequestFilter,
+) {
     @Bean
     fun getCustomBean() = SomeService()
     @Bean
@@ -36,16 +42,31 @@ class CustomConfig {
 //            .build()
 //        return InMemoryUserDetailsManager(user, admin)
 //    }
+//    @Bean
+//    fun configure(http: HttpSecurity): SecurityFilterChain{
+//        http.authorizeHttpRequests{requests ->
+//            requests.requestMatchers("css/**").permitAll()
+//            requests.requestMatchers("js/**").permitAll()
+//            requests.requestMatchers("admin/**").hasRole("ADMIN")
+//            requests.anyRequest().authenticated()
+//        }
+//        http.httpBasic(Customizer.withDefaults())
+//        return http.build()
+//    }
     @Bean
-    fun configure(http: HttpSecurity): SecurityFilterChain{
-        http.authorizeHttpRequests{requests ->
-            requests.requestMatchers("css/**").permitAll()
-            requests.requestMatchers("js/**").permitAll()
-            requests.requestMatchers("admin/**").hasRole("ADMIN")
-            requests.anyRequest().authenticated()
+    fun configure(http: HttpSecurity) : SecurityFilterChain {
+        return http.authorizeHttpRequests {
+            it.requestMatchers("/api/auth/**").permitAll()
+            it.requestMatchers("/api/admin/**").hasRole("ADMIN")
+            it.requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")
         }
-        http.httpBasic(Customizer.withDefaults())
-        return http.build()
+            .userDetailsService(userDetailsService)
+            .httpBasic(Customizer.withDefaults())
+            .csrf {
+                it.disable()
+            }
+            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .build()
     }
 }
 //• permitAll() - указывает, что любой может получить доступ к URL (аутентифицированные

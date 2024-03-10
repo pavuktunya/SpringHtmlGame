@@ -3,26 +3,39 @@ spring:
     name: workshop
   main:
     banner-mode: off
-  datasource:
-    url: jdbc:mysql://localhost:3306/test_sql
-    username: user
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    generate-ddl: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
-        pool-size: 3
         hbm2ddl:
           auto:
-            #none
             create
-            #create-drop
-            #update
-            #validate
-            #none
-    show-sql: true
-    generate-ddl: true
+  datasource:
+    url: jdbc:sqlite:db.sqlite
+    username: admin
+    password: root
+    driver-class-name: org.sqlite.JDBC
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/test_sql
+#    username: user
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+#        pool-size: 3
+#        hbm2ddl:
+#          auto:
+#            #none
+#            create
+#            #create-drop
+#            #update
+#            #validate
+#            #none
+#    show-sql: true
+#    generate-ddl: true
 #  security:
 #    user:
 #      name: admin

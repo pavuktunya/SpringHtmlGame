@@ -30,13 +30,19 @@ dependencies {
 	//Thymeleaf
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	//Database
-	runtimeOnly("com.mysql:mysql-connector-j")
-	implementation("mysql:mysql-connector-java:8.0.33")
+	//community dialect for sqlite and hibernate 6
+	implementation("org.xerial:sqlite-jdbc:3.44.1.0")
+	implementation("org.hibernate.orm:hibernate-community-dialects:6.4.4.Final")
+//	runtimeOnly("com.mysql:mysql-connector-j")
+//	implementation("mysql:mysql-connector-java:8.0.33")
 	//implementation("org.hibernate:hibernate-core:5.5.8.Final")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	//security
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	testImplementation("org.springframework.security:spring-security-test")
+	implementation("io.jsonwebtoken:jjwt-api:0.12.3")
+	implementation("io.jsonwebtoken:jjwt-impl:0.12.3")
+	implementation("io.jsonwebtoken:jjwt-jackson:0.12.3")
 	//developmentOnly("org.springframework.boot:spring-boot-docker-compose")
 }
 

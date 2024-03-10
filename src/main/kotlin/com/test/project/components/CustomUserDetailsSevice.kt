@@ -26,5 +26,4 @@ class CustomUserDetailsSevice (
     override fun loadUserByUsername(username: String?): UserDetails? {
         return users.firstOrNull{ it.username == username}
     }
-
 }
