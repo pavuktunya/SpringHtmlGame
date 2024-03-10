@@ -1,6 +1,5 @@
 package com.test.project.components.jwt
 
-import com.server.restful_polls.service.impl.UserDetailsServiceImpl
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

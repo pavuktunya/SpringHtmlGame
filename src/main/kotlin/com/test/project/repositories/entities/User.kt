@@ -8,5 +8,7 @@ class User(
     @Column(nullable = false, length = 250)
     var name: String,
     @Column(nullable = false, length = 125)
-    var email: String
+    var email: String,
+    @Column(nullable = false, length = 125)
+    var password: String
 ): AbstractEntity()

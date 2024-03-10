@@ -1,12 +1,15 @@
 package com.test.project.services
 
+import com.test.project.model.request.AnswerRequest
 import com.test.project.model.request.SurveyRequest
 import com.test.project.model.response.SurveyResponse
+import com.test.project.model.response.UserResponse
 
 interface SurveyService {
     fun list(): List<SurveyResponse>
-    fun findSurveyById(entityId: Long): SurveyResponse
+    fun getById(entityId: Long): SurveyResponse
+    fun giveAnswer(surveyId: Long, answerRequest: AnswerRequest): UserResponse
     fun create(request: SurveyRequest): SurveyResponse
-    fun startStop(entityId: Long, flag: Boolean): SurveyResponse
-    fun delete(entityId: Long)
+    fun update(surveyId: Long, request: SurveyRequest): SurveyResponse
+    fun delete(surveyId: Long)
 }

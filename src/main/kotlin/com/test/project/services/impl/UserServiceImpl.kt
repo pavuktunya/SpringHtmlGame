@@ -8,6 +8,9 @@ import com.test.project.services.UserService
 import jakarta.transaction.Transactional
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.data.jpa.repository.Modifying
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 
 @Service
@@ -21,6 +24,10 @@ class UserServiceImpl(
     }
     override fun getById(id: Long): UserResponse {
         val user = dao.findEntityById(id) ?: throw NotFoundException()
+        return mapper.asResponse(user)
+    }
+    override fun getByEmail(email: String): UserResponse {
+        val user = dao.findUserByEmail(email) ?: throw NotFoundException()
         return mapper.asResponse(user)
     }
     //либо выполнится полностью, либо ничего

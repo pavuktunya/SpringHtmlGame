@@ -10,7 +10,6 @@ class FreeAnswer (
     @ManyToOne
     @JoinColumn(name = "survey_id")
     val survey: Survey,
-
     @Column(nullable = false, length = 256)
     val answer: String,
 ) : AbstractEntity()

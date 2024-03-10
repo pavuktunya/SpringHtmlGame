@@ -17,7 +17,7 @@ class AdminSurveyControllerImpl (
 
     @GetMapping("/{id}")
     override fun findSurveyById(@PathVariable id: Long): SurveyResponse =
-        adminSurveyService.findSurveyById(id)
+        adminSurveyService.getById(id)
 
     @PostMapping
     override fun createSurvey(@RequestBody request: SurveyRequest): SurveyResponse {

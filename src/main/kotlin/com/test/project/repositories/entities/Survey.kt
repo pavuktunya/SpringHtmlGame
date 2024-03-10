@@ -9,17 +9,12 @@ import jakarta.persistence.Enumerated
 class Survey(
     @Column(nullable = false, length = 256)
     var surveyMessage: String,
-
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false, length = 32)
     @Enumerated(EnumType.STRING)
-    var surveyType: SurveyType,
-
-    @Column(nullable = false, length = 16)
-    var isItContinuing: Boolean,
+    var surveyType: SurveyType
 ) : AbstractEntity()
 
 enum class SurveyType {
-    SINGLE_ANSWER_TEST,
     MULTI_ANSWER_TEST,
     FREE_ANSWER_TEST
 }
