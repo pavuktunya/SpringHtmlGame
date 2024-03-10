@@ -23,7 +23,6 @@ class FreeSurveyMapper {
 
     fun update(survey: Survey, flag: Boolean): Survey{
         survey.isItContinuing = flag
-
         return survey
     }
 }

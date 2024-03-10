@@ -1,10 +1,10 @@
 package com.server.restful_polls.service.impl
 
-import com.server.restful_polls.database.dao.UserDao
-import com.server.restful_polls.database.entity.impl.User
-import com.server.restful_polls.model.jwt.JwtUtils
-import com.server.restful_polls.model.request.UserRequest
-import com.server.restful_polls.service.JwtService
+import com.test.project.components.jwt.JwtUtils
+import com.test.project.model.request.UserRequest
+import com.test.project.repositories.daos.UserDao
+import com.test.project.repositories.entities.User
+import com.test.project.services.JwtService
 import org.springframework.stereotype.Service
 
 @Service

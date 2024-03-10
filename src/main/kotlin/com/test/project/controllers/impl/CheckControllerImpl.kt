@@ -1,7 +1,5 @@
 package com.test.project.controllers.impl
 
-import com.server.restful_polls.controller.CheckController
-import com.server.restful_polls.model.message.CheckMessage
 import com.test.project.controllers.CheckController
 import com.test.project.model.message.CheckMessage
 import org.springframework.web.bind.annotation.GetMapping

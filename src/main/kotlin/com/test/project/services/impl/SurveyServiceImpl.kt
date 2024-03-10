@@ -1,12 +1,7 @@
 package com.server.restful_polls.service.impl
 
-import com.server.restful_polls.database.dao.FreeAnswerDao
-import com.server.restful_polls.database.dao.SurveyDao
-import com.server.restful_polls.model.mapper.AnswerMapper
-import com.server.restful_polls.model.mapper.MapperSurveyUserVersion
-import com.server.restful_polls.model.request.AnswerRequest
-import com.server.restful_polls.model.response.SurveyUserVersion
-import com.server.restful_polls.service.SurveyService
+import com.test.project.model.mapper.AnswerMapper
+import com.test.project.model.mapper.MapperSurveyUserVersion
 import com.test.project.model.request.AnswerRequest
 import com.test.project.repositories.daos.FreeAnswerDao
 import com.test.project.repositories.daos.SurveyDao

@@ -1,6 +1,7 @@
 package com.test.project.controllers.impl
 
 import com.test.project.controllers.AdminUserController
+import com.test.project.model.message.DeletedMessage
 import com.test.project.model.request.UserRequest
 import com.test.project.model.response.UserResponse
 import com.test.project.services.UserService
@@ -17,18 +18,18 @@ class AdminUserControllerImpl (
 
     //find user data by id
     @GetMapping("/{id}")
-    override fun getUserById(@PathVariable id: Long): UserResponse = adminUserService.getUserById(id)
+    override fun getUserById(@PathVariable id: Long): UserResponse = adminUserService.getById(id)
 
     //update user data
     @PutMapping("/{id}")
     override fun updateUser(@PathVariable id: Long, @RequestBody request: UserRequest): UserResponse =
-        adminUserService.updateUser(id, request)
+        adminUserService.update(id, request)
 
     //delete user data
     @DeleteMapping("/{id}")
-    override fun deleteUser(@PathVariable id: Long): DeleteMessage {
-        adminUserService.deleteUser(id)
-        return DeleteMessage("User")
+    override fun deleteUser(@PathVariable id: Long): DeletedMessage {
+        adminUserService.delete(id)
+        return DeletedMessage("User")
     }
 }
 

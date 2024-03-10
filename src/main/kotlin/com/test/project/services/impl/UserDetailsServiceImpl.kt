@@ -1,6 +1,5 @@
 package com.server.restful_polls.service.impl
 
-import com.server.restful_polls.database.dao.UserDao
 import com.test.project.repositories.daos.UserDao
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User

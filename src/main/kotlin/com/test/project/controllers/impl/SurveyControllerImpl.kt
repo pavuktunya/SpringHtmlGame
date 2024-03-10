@@ -6,6 +6,9 @@ import com.server.restful_polls.model.request.AnswerRequest
 import com.server.restful_polls.model.response.SurveyUserVersion
 import com.server.restful_polls.service.SurveyService
 import com.test.project.controllers.SurveyController
+import com.test.project.model.message.AnswerMessage
+import com.test.project.model.request.AnswerRequest
+import com.test.project.repositories.entities.Survey
 import com.test.project.services.SurveyService
 import org.springframework.web.bind.annotation.*
 
@@ -15,12 +18,12 @@ class SurveyControllerImpl (
     private val surveyService: SurveyService
 ) : SurveyController {
     @GetMapping
-    override fun getSurveyList(): List<SurveyUserVersion> =
-        surveyService.getSurveyList()
+    override fun getSurveyList(): List<Survey> =
+        surveyService.list()
 
     @PostMapping("/{id}")
     override fun giveAnswer(@PathVariable id: Long, @RequestBody answerRequest: AnswerRequest): AnswerMessage {
-        surveyService.giveAnswer(id, answerRequest)
+        surveyService.create(id, answerRequest)
         return AnswerMessage()
     }
 }

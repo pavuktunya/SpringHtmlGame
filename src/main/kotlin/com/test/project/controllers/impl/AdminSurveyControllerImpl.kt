@@ -1,6 +1,7 @@
 package com.test.project.controllers.impl
 
 import com.test.project.controllers.AdminSurveyController
+import com.test.project.model.message.DeletedMessage
 import com.test.project.model.request.SurveyRequest
 import com.test.project.model.response.SurveyResponse
 import com.test.project.services.SurveyService
@@ -20,16 +21,16 @@ class AdminSurveyControllerImpl (
 
     @PostMapping
     override fun createSurvey(@RequestBody request: SurveyRequest): SurveyResponse {
-        return adminSurveyService.createSurvey(request)
+        return adminSurveyService.create(request)
     }
 
     @PutMapping("/{id}")
     override fun startStopSurvey(@PathVariable id: Long, @RequestBody flag: Boolean): SurveyResponse =
-        adminSurveyService.startStopSurvey(id, flag)
+        adminSurveyService.startStop(id, flag)
 
     @DeleteMapping("/{id}")
-    override fun deleteSurvey(@PathVariable id: Long): DeleteMessage {
-        adminSurveyService.deleteSurvey(id)
-        return DeleteMessage("Survey")
+    override fun deleteSurvey(@PathVariable id: Long): DeletedMessage {
+        adminSurveyService.delete(id)
+        return DeletedMessage("Survey")
     }
 }

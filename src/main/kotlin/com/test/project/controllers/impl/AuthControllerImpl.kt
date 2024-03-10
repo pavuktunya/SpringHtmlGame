@@ -1,10 +1,7 @@
 package com.test.project.controllers.impl
 
 import com.test.project.controllers.AuthController
-import com.test.project.model.message.AlreadyExistedMessage
-import com.test.project.model.message.CreateMessage
-import com.test.project.model.message.DoesntExistedMessage
-import com.test.project.model.message.TokenMessage
+import com.test.project.model.message.*
 import com.test.project.model.request.UserRequest
 import com.test.project.services.AuthService
 import com.test.project.services.JwtService
@@ -22,7 +19,7 @@ class AuthControllerImpl(
 ) : AuthController {
     //registration of new users
     @PostMapping("/new")
-    override fun createUser(@RequestBody request: UserRequest): AbstractMessage {
+    override fun createUser(@RequestBody request: UserRequest): AbstractApiMessage {
         return if (authService.create(request))
             CreateMessage()
         else
@@ -31,7 +28,7 @@ class AuthControllerImpl(
 
     //get jwt token
     @PostMapping("/get_token")
-    override fun getToken(@RequestBody request: UserRequest): AbstractMessage {
+    override fun getToken(@RequestBody request: UserRequest): AbstractApiMessage {
         val checkPair = jwtService.getToken(request)
         return if (checkPair.first) {
             TokenMessage(checkPair.second)

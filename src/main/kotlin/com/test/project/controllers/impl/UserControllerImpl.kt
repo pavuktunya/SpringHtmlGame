@@ -23,6 +23,6 @@ class UserControllerImpl(
     @DeleteMapping("/{id}")
     override fun delete(@PathVariable id: Long): DeletedMessage {
         service.delete(id)
-        return DeletedMessage()
+        return DeletedMessage("deleted")
     }
 }

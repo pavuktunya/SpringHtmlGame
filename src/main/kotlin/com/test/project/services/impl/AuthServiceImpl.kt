@@ -1,10 +1,5 @@
 package com.server.restful_polls.service.impl
 
-import com.server.restful_polls.database.dao.UserDao
-import com.server.restful_polls.database.entity.impl.User
-import com.server.restful_polls.model.mapper.UserMapper
-import com.server.restful_polls.model.request.UserRequest
-import com.server.restful_polls.service.AuthService
 import com.test.project.model.mapper.UserMapper
 import com.test.project.model.request.UserRequest
 import com.test.project.repositories.daos.UserDao
