@@ -1,13 +1,11 @@
 package com.test.project.controllers.impl
 
-import com.server.restful_polls.controller.SurveyController
-import com.server.restful_polls.model.message.AnswerMessage
-import com.server.restful_polls.model.request.AnswerRequest
-import com.server.restful_polls.model.response.SurveyUserVersion
-import com.server.restful_polls.service.SurveyService
 import com.test.project.controllers.SurveyController
 import com.test.project.model.message.AnswerMessage
+import com.test.project.model.message.DeletedMessage
 import com.test.project.model.request.AnswerRequest
+import com.test.project.model.request.SurveyRequest
+import com.test.project.model.response.SurveyResponse
 import com.test.project.repositories.entities.Survey
 import com.test.project.services.SurveyService
 import org.springframework.web.bind.annotation.*
@@ -25,5 +23,21 @@ class SurveyControllerImpl (
     override fun giveAnswer(@PathVariable id: Long, @RequestBody answerRequest: AnswerRequest): AnswerMessage {
         surveyService.create(id, answerRequest)
         return AnswerMessage()
+    }
+    @GetMapping
+    override fun list(): List<SurveyResponse> = surveyService.list()
+
+    @GetMapping("/{id}")
+    override fun findSurveyById(@PathVariable id: Long): SurveyResponse =
+        surveyService.getById(id)
+
+    @PostMapping
+    override fun createSurvey(@RequestBody request: SurveyRequest): SurveyResponse {
+        return surveyService.create(request)
+    }
+    @DeleteMapping("/{id}")
+    override fun deleteSurvey(@PathVariable id: Long): DeletedMessage {
+        surveyService.delete(id)
+        return DeletedMessage("Survey")
     }
 }

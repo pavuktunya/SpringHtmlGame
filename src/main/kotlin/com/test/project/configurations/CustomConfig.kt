@@ -1,6 +1,7 @@
 package com.test.project.configurations
 
 import com.test.project.components.jwt.JwtRequestFilter
+import com.test.project.services.UserService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.Customizer
@@ -14,7 +15,7 @@ class SomeService
 
 @Configuration
 class CustomConfig(
-    private val userDetailsService: UserDetailsServiceImpl,
+    private val userService: UserService,
     private val jwtRequestFilter: JwtRequestFilter,
 ) {
     @Bean
@@ -55,7 +56,7 @@ class CustomConfig(
             it.requestMatchers("/api/admin/**").hasRole("ADMIN")
             it.requestMatchers("/api/**").hasAnyRole("ADMIN", "USER")
         }
-            .userDetailsService(userDetailsService)
+            .userDetailsService(userService)
             .httpBasic(Customizer.withDefaults())
             .csrf {
                 it.disable()

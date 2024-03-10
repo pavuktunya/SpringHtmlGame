@@ -1,6 +1,5 @@
 package com.test.project.controllers.impl
 
-import com.test.project.controllers.AdminUserController
 import com.test.project.model.message.DeletedMessage
 import com.test.project.model.request.UserRequest
 import com.test.project.model.response.UserResponse

@@ -25,7 +25,6 @@ class AuthControllerImpl(
         else
             AlreadyExistedMessage()
     }
-
     //get jwt token
     @PostMapping("/get_token")
     override fun getToken(@RequestBody request: UserRequest): AbstractApiMessage {
