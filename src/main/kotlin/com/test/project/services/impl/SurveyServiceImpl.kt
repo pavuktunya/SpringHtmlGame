@@ -27,7 +27,7 @@ class SurveyServiceImpl(
     }
     override fun getById(entityId: Long): SurveyResponse {
         val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
-        val answerList = answerDao.findAllBySurveyEntityId(survey.id).map { it.answer }
+        val answerList = answerDao.findAllById(survey.id).map { it.answer }
         return freeSurveyMapper.asResponse(survey, answerList)
     }
     @Transactional
@@ -46,12 +46,12 @@ class SurveyServiceImpl(
     @Transactional
     @Modifying
     override fun delete(entityId: Long) {
-        val survey = surveyDao.findSurveyById(entityId) ?: throw Exception("Not found")
+        val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
         answerDao.findFreeAnswersBySurveyEntityId(entityId).forEach { answerDao.delete(it) }
         surveyDao.delete(survey)
     }
     override fun giveAnswer(id: Long, answerRequest: AnswerRequest) {
-        val survey = surveyDao.findSurveyById(id) ?: throw Exception("Not found")
+        val survey = surveyDao.findEntityById(id) ?: throw Exception("Not found")
         answerMapper.asEntity(answerRequest, survey).also { answerDao.save(it) }
         return
     }

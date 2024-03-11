@@ -1,20 +1,20 @@
 package com.test.project.repositories.entities
 
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
+import jakarta.persistence.*
 
 @Entity
 class Survey(
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    val user: User,
     @Column(nullable = false, length = 256)
     var surveyMessage: String,
-    @Column(nullable = false, length = 32)
-    @Enumerated(EnumType.STRING)
-    var surveyType: SurveyType
+    @Column(nullable = false, length = 4)
+    var surveyType: Byte
 ) : AbstractEntity()
 
 enum class SurveyType {
-    MULTI_ANSWER_TEST,
-    FREE_ANSWER_TEST
+    MULTI_ANSWER,
+    FREE_ANSWER;
+    fun getByte(survey: SurveyType) = survey.ordinal.toByte()
 }

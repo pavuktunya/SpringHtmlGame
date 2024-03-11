@@ -18,7 +18,7 @@ class FreeSurveyMapper {
         createdAt = survey.createdAt,
         surveyMessage = survey.surveyMessage,
         surveyType = survey.surveyType,
-        answers = answerList,
+        answers = answerList
     )
 
     fun update(survey: Survey, flag: Boolean): Survey{

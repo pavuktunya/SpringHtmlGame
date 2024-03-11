@@ -1,5 +1,6 @@
 package com.test.project.components.jwt
 
+import com.test.project.repositories.entities.User
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.security.Keys
 import org.springframework.security.core.userdetails.UserDetails
@@ -15,22 +16,19 @@ class JwtUtils {
     private val secretKey: SecretKey = Keys.hmacShaKeyFor(secretString.toByteArray())
     //~10 day duration
     private val expirationTime: Long = 864_000_000
-
     //generate token
-    fun generateToken(userDetails: UserDetails): String {
+    fun generateToken(user: User): String {
         return Jwts.builder()
-            .subject(userDetails.username)
+            .subject(user.name)
             .issuedAt(Date())
             .expiration(Date(System.currentTimeMillis() + expirationTime))
             .signWith(secretKey)
             .compact()
     }
-
     //validate token
     fun validateToken(token: String, userDetails: UserDetails): Boolean {
         return extractEmail(token) == userDetails.username && !isTokenExpired(token)
     }
-
     //load email from payload
     fun extractEmail(token: String): String {
         return Jwts.parser()
@@ -40,7 +38,6 @@ class JwtUtils {
             .payload
             .subject
     }
-
     //check that token not is expired
     fun isTokenExpired(token: String): Boolean {
         return Jwts.parser()

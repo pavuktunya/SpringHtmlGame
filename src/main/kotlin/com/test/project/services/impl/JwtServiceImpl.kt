@@ -16,11 +16,7 @@ class JwtServiceImpl(
 ) : JwtService {
     override fun getToken(request: UserRequest): Pair<Boolean, String> {
         val user: User? = userDao.findUserByEmail(request.email)
-        if (user != null) {
-            val userDetails = userService.getByEmail(user.email)
-            return Pair(true, jwtUtils.generateToken(userDetails!!))
-        } else {
-            return Pair(false, "")
-        }
+        //val user = userService.getByEmail(user.email)
+        return Pair(true, jwtUtils.generateToken(user!!))
     }
 }

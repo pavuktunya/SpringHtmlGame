@@ -5,7 +5,7 @@ import jakarta.persistence.Entity
 
 @Entity
 class User(
-    @Column(nullable = false, length = 250)
+    @Column(nullable = false, length = 125)
     var name: String,
     @Column(nullable = false, length = 125)
     var email: String,

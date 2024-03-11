@@ -20,7 +20,6 @@ class AuthServiceImpl(
             return false
         } else {
             val newUser: User = userMapper.asEntity(request).also {
-                //it.userRole = UserRole.ADMIN
                 userDao.save(it)
             }
             return true

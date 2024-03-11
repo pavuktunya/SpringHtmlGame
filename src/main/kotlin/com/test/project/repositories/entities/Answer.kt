@@ -6,10 +6,10 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 
 @Entity
-class FreeAnswer (
+class Answer (
     @ManyToOne
     @JoinColumn(name = "survey_id")
     val survey: Survey,
     @Column(nullable = false, length = 256)
-    val answer: String,
+    val answer: String
 ) : AbstractEntity()
