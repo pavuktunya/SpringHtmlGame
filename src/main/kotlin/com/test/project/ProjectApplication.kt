@@ -21,17 +21,14 @@ class ProjectApplication: ApplicationRunner{
 	lateinit var context: ApplicationContext
 	@Autowired
 	lateinit var encoder: PasswordEncoder
-
 	override fun run(args: ApplicationArguments?) {
-		val beans = context.beanDefinitionNames
-		//beans.forEach { println(it) }
-		val hash = encoder.encode("password")
-		println(hash)
-
-		println(encoder.matches("password", hash))
+//		val beans = context.beanDefinitionNames
+//		//beans.forEach { println(it) }
+//		val hash = encoder.encode("password")
+//		println(hash)
+//		println(encoder.matches("password", hash))
 	}
 }
-
 fun main(args: Array<String>) {
 	runApplication<ProjectApplication>(*args)
 }

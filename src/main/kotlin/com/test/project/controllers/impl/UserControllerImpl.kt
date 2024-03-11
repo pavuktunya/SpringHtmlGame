@@ -15,6 +15,7 @@ class UserControllerImpl (
 ) : UserController {
     @GetMapping
     override fun list(): List<UserResponse> = userService.list()
+    @PostMapping
     override fun create(request: UserRequest): UserResponse = userService.create(request)
     //find user data by id
     @GetMapping("/{id}")

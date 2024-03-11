@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.*
 class SurveyControllerImpl (
     private val surveyService: SurveyService
 ) : SurveyController {
+    @PostMapping
+    override fun createSurvey(@RequestBody request: SurveyRequest): SurveyResponse {
+        return surveyService.create(request)
+    }
+    @GetMapping
+    override fun list(): List<SurveyResponse> = surveyService.list()
     @PostMapping("/{id}")
     override fun giveAnswer(@PathVariable id: Long, @RequestBody answerRequest: AnswerRequest): Message {
         surveyService.giveAnswer(id, answerRequest)
         return Message("Answer")
     }
-    @GetMapping
-    override fun list(): List<SurveyResponse> = surveyService.list()
     @GetMapping("/{id}")
     override fun findSurveyById(@PathVariable id: Long): SurveyResponse =
         surveyService.getById(id)
-    @PostMapping
-    override fun createSurvey(@RequestBody request: SurveyRequest): SurveyResponse {
-        return surveyService.create(request)
-    }
     @DeleteMapping("/{id}")
     override fun deleteSurvey(@PathVariable id: Long): DeletedMessage {
         surveyService.delete(id)
