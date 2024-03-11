@@ -3,7 +3,6 @@ package com.test.project.controllers.impl
 import com.test.project.controllers.AuthController
 import com.test.project.model.message.*
 import com.test.project.model.request.UserRequest
-import com.test.project.services.AuthService
 import com.test.project.services.JwtService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
