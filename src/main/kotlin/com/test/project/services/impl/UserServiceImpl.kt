@@ -54,6 +54,6 @@ class UserServiceImpl(
     override fun loadUserByUsername(username: String): UserDetails {
         val user = dao.findUserByName(username)!!
         val role = USER_ROLES.deByte(user.role).name.uppercase()
-        return User(user.name, user.password, listOf(SimpleGrantedAuthority(role)))
+        return User(user.name, user.password, listOf(SimpleGrantedAuthority("ROLE_$role")))
     }
 }

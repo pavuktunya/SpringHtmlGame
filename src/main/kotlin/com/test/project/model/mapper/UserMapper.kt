@@ -2,6 +2,7 @@ package com.test.project.model.mapper
 
 import com.test.project.model.request.UserRequest
 import com.test.project.model.response.UserResponse
+import com.test.project.repositories.entities.USER_ROLES
 import com.test.project.repositories.entities.User
 import org.springframework.stereotype.Component
 
@@ -11,7 +12,7 @@ class UserMapper {
         name = request.name,
         email = request.email,
         password = request.password,
-        role = 0
+        role = USER_ROLES.USER.byte
     )
     fun asResponse(user: User) = UserResponse(
         id = user.id,
