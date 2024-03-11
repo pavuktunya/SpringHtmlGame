@@ -51,8 +51,8 @@ class UserServiceImpl(
         val user = dao.findEntityById(id) ?: throw NotFoundException()
         dao.delete(user)
     }
-    override fun loadUserByUsername(username: String): UserDetails {
-        val user = dao.findUserByName(username)!!
+    override fun loadUserByUsername(email: String): UserDetails {
+        val user = dao.findUserByEmail(email)!!
         val role = USER_ROLES.deByte(user.role).name.uppercase()
         return User(user.name, user.password, listOf(SimpleGrantedAuthority("ROLE_$role")))
     }

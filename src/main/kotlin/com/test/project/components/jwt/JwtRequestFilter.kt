@@ -14,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 @Component
 class JwtRequestFilter(
     private val jwtUtils: JwtUtils,
-    private val userService: UserService
+    private val userService: UserServiceImpl
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -33,7 +33,7 @@ class JwtRequestFilter(
             val user = userService.getByEmail(email)
             if (jwtUtils.validateToken(token, user.name)) {
                 val authentication = UsernamePasswordAuthenticationToken(
-                    user, "", null
+                    user, "", userService.loadUserByUsername(email).authorities
                 )
                 authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
                 SecurityContextHolder.getContext().authentication = authentication
