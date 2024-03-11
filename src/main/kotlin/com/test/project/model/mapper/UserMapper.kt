@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component
 class UserMapper {
     fun asEntity(request: UserRequest) = User(
         name = request.name,
-        email = request.email
+        email = request.email,
+        password = request.password
     )
     fun asResponse(user: User) = UserResponse(
         id = user.id,
@@ -20,6 +21,7 @@ class UserMapper {
     fun update(user: User, request: UserRequest): User{
         user.name = request.name
         user.email = request.email
+        user.password = request.password
         return user
     }
     fun asListResponse(users: Iterable<User>) = users.map { asResponse(it) }

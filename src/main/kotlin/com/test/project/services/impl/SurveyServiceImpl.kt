@@ -1,8 +1,7 @@
 package com.server.restful_polls.service.impl
 
 import com.test.project.model.mapper.AnswerMapper
-import com.test.project.model.mapper.FreeSurveyMapper
-import com.test.project.model.mapper.MapperSurveyUserVersion
+import com.test.project.model.mapper.SurveyMapper
 import com.test.project.model.request.AnswerRequest
 import com.test.project.model.request.SurveyRequest
 import com.test.project.model.response.SurveyResponse
@@ -18,7 +17,7 @@ class SurveyServiceImpl(
     private val mapperSurveyUserVersion: MapperSurveyUserVersion,
     private val surveyDao: SurveyDao,
     private val answerDao: AnswerDao,
-    private val freeSurveyMapper: FreeSurveyMapper,
+    private val surveyMapper: SurveyMapper,
     private val answerMapper: AnswerMapper
 ) : SurveyService {
     override fun list(): List<SurveyResponse> {
@@ -28,20 +27,20 @@ class SurveyServiceImpl(
     override fun getById(entityId: Long): SurveyResponse {
         val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
         val answerList = answerDao.findAllById(survey.id).map { it.answer }
-        return freeSurveyMapper.asResponse(survey, answerList)
+        return surveyMapper.asResponse(survey, answerList)
     }
     @Transactional
     override fun create(request: SurveyRequest): SurveyResponse {
-        val survey = freeSurveyMapper.asEntity(request).also { surveyDao.save(it) }
-        return freeSurveyMapper.asResponse(survey, listOf())
+        val survey = surveyMapper.asEntity(request).also { surveyDao.save(it) }
+        return surveyMapper.asResponse(survey, listOf())
     }
     @Transactional
     @Modifying
     override fun startStopSurvey(entityId: Long, flag: Boolean): SurveyResponse {
         val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
-        val updated = freeSurveyMapper.update(survey, flag)
+        val updated = surveyMapper.update(survey, flag)
         val answerList = answerDao.findAllBySurveyEntityId(survey.id).map { it.answer }
-        return freeSurveyMapper.asResponse(updated,answerList)
+        return surveyMapper.asResponse(updated,answerList)
     }
     @Transactional
     @Modifying
