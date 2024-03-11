@@ -10,7 +10,8 @@ class UserMapper {
     fun asEntity(request: UserRequest) = User(
         name = request.name,
         email = request.email,
-        password = request.password
+        password = request.password,
+        role = 0
     )
     fun asResponse(user: User) = UserResponse(
         id = user.id,

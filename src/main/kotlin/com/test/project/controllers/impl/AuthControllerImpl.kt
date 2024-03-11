@@ -11,12 +11,11 @@ import org.springframework.web.bind.annotation.RestController
 
 //auth controller
 @RestController
-@RequestMapping("/api/auth")
 class AuthControllerImpl(
     private val jwtService: JwtServiceImpl
 ) : AuthController {
     //get jwt token
-    @PostMapping("/get_token")
+    @PostMapping("/api/auth/get_token")
     override fun getToken(@RequestBody request: UserRequest): TokenMessage {
         val checkPair = jwtService.getToken(request)
         return TokenMessage(checkPair.second)

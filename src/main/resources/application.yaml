@@ -10,7 +10,7 @@ spring:
       hibernate:
         hbm2ddl:
           auto:
-            create
+            none
   datasource:
     url: jdbc:sqlite:db.sqlite
     username: admin

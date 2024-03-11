@@ -12,7 +12,7 @@ import java.lang.reflect.Array.getByte
 @Component
 class SurveyMapper {
     fun asEntity(request: SurveyRequest) = Survey(
-        user = User("Mikl", "Mikl@mail.ru", "12345"),
+        user = User("Mikl", "Mikl@mail.ru", "12345", 0),
         surveyMessage = request.surveyMessage,
         surveyType = request.surveyType.byte
     )

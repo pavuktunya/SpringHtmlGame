@@ -11,25 +11,25 @@ import com.test.project.services.SurveyService
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/survey")
+@RequestMapping("/api")
 class SurveyControllerImpl (
     private val surveyService: SurveyService
 ) : SurveyController {
-    @PostMapping
+    @GetMapping("/survey")
+    override fun list(): List<SurveyResponse> = surveyService.list()
+    @PostMapping("/survey")
     override fun createSurvey(@RequestBody request: SurveyRequest): SurveyResponse {
         return surveyService.create(request)
     }
-    @GetMapping
-    override fun list(): List<SurveyResponse> = surveyService.list()
-    @PostMapping("/{id}")
+    @GetMapping("admin/survey/{id}")
+    override fun findSurveyById(@PathVariable id: Long): SurveyResponse =
+        surveyService.getById(id)
+    @PostMapping("/survey/{id}")
     override fun giveAnswer(@PathVariable id: Long, @RequestBody answerRequest: AnswerRequest): Message {
         surveyService.giveAnswer(id, answerRequest)
         return Message("Answer")
     }
-    @GetMapping("/{id}")
-    override fun findSurveyById(@PathVariable id: Long): SurveyResponse =
-        surveyService.getById(id)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("admin/survey/{id}")
     override fun deleteSurvey(@PathVariable id: Long): DeletedMessage {
         surveyService.delete(id)
         return DeletedMessage("Survey")

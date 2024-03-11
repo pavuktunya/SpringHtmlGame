@@ -4,6 +4,7 @@ import com.test.project.model.mapper.UserMapper
 import com.test.project.model.request.UserRequest
 import com.test.project.model.response.UserResponse
 import com.test.project.repositories.daos.UserDao
+import com.test.project.repositories.entities.USER_ROLES
 import com.test.project.services.UserService
 import jakarta.transaction.Transactional
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
@@ -52,6 +53,7 @@ class UserServiceImpl(
     }
     override fun loadUserByUsername(username: String): UserDetails {
         val user = dao.findUserByName(username)!!
-        return User(user.name, user.password, null)
+        val role = USER_ROLES.deByte(user.role).name.uppercase()
+        return User(user.name, user.password, listOf(SimpleGrantedAuthority(role)))
     }
 }
