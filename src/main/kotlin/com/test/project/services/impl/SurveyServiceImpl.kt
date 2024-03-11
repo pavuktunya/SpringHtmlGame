@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service
 
 @Service
 class SurveyServiceImpl(
-    private val mapperSurveyUserVersion: MapperSurveyUserVersion,
     private val surveyDao: SurveyDao,
     private val answerDao: AnswerDao,
     private val surveyMapper: SurveyMapper,
@@ -22,11 +21,11 @@ class SurveyServiceImpl(
 ) : SurveyService {
     override fun list(): List<SurveyResponse> {
         val surveys = surveyDao.findAll()
-        return surveys.map { mapperSurveyUserVersion.asResponse(it) }
+        return surveys.map { surveyMapper.asResponse(it) }
     }
     override fun getById(entityId: Long): SurveyResponse {
         val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
-        val answerList = answerDao.findAllById(survey.id).map { it.answer }
+        val answerList = answerDao.findAnswersBySurveyId(survey.id).map { it.answer }
         return surveyMapper.asResponse(survey, answerList)
     }
     @Transactional
@@ -36,23 +35,15 @@ class SurveyServiceImpl(
     }
     @Transactional
     @Modifying
-    override fun startStopSurvey(entityId: Long, flag: Boolean): SurveyResponse {
-        val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
-        val updated = surveyMapper.update(survey, flag)
-        val answerList = answerDao.findAllBySurveyEntityId(survey.id).map { it.answer }
-        return surveyMapper.asResponse(updated,answerList)
-    }
-    @Transactional
-    @Modifying
     override fun delete(entityId: Long) {
         val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
-        answerDao.findFreeAnswersBySurveyEntityId(entityId).forEach { answerDao.delete(it) }
+        answerDao.findAnswersBySurveyId(entityId).forEach { answerDao.delete(it) }
         surveyDao.delete(survey)
     }
     override fun giveAnswer(id: Long, answerRequest: AnswerRequest) {
         val survey = surveyDao.findEntityById(id) ?: throw Exception("Not found")
         answerMapper.asEntity(answerRequest, survey).also { answerDao.save(it) }
-        return
+        return surveyMapper.asResponse(survey, listOf())
     }
     override fun update(surveyId: Long, request: SurveyRequest): SurveyResponse {
         TODO("Not yet implemented")

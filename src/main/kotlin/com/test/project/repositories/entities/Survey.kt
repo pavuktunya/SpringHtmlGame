@@ -16,5 +16,9 @@ class Survey(
 enum class SurveyType {
     MULTI_ANSWER,
     FREE_ANSWER;
-    fun getByte(survey: SurveyType) = survey.ordinal.toByte()
+    val byte: Byte
+        get() = this.ordinal.toByte()
+    companion object{
+        fun deByte(byte: Byte) = SurveyType.entries.first { it.ordinal==byte.toInt() }
+    }
 }

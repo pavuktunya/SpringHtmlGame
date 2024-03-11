@@ -13,25 +13,17 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/auth")
 class AuthControllerImpl(
-    private val authService: AuthService,
     private val jwtService: JwtService,
 ) : AuthController {
     //registration of new users
     @PostMapping("/new")
     override fun createUser(@RequestBody request: UserRequest): AbstractApiMessage {
-        return if (authService.create(request))
-            CreateMessage()
-        else
-            AlreadyExistedMessage()
+        return Message()
     }
     //get jwt token
     @PostMapping("/get_token")
     override fun getToken(@RequestBody request: UserRequest): AbstractApiMessage {
         val checkPair = jwtService.getToken(request)
-        return if (checkPair.first) {
-            TokenMessage(checkPair.second)
-        } else {
-            DoesntExistedMessage()
-        }
+        return TokenMessage(checkPair.second)
     }
 }

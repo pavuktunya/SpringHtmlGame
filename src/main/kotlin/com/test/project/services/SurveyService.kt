@@ -8,7 +8,7 @@ import com.test.project.model.response.UserResponse
 interface SurveyService {
     fun list(): List<SurveyResponse>
     fun getById(entityId: Long): SurveyResponse
-    fun giveAnswer(surveyId: Long, answerRequest: AnswerRequest): UserResponse
+    fun giveAnswer(surveyId: Long, answerRequest: AnswerRequest): SurveyResponse
     fun create(request: SurveyRequest): SurveyResponse
     fun update(surveyId: Long, request: SurveyRequest): SurveyResponse
     fun delete(surveyId: Long)

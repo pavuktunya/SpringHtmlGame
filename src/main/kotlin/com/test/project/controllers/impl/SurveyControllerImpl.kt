@@ -1,8 +1,8 @@
 package com.test.project.controllers.impl
 
 import com.test.project.controllers.SurveyController
-import com.test.project.model.message.AnswerMessage
 import com.test.project.model.message.DeletedMessage
+import com.test.project.model.message.Message
 import com.test.project.model.request.AnswerRequest
 import com.test.project.model.request.SurveyRequest
 import com.test.project.model.response.SurveyResponse
@@ -15,14 +15,10 @@ import org.springframework.web.bind.annotation.*
 class SurveyControllerImpl (
     private val surveyService: SurveyService
 ) : SurveyController {
-    @GetMapping
-    override fun getSurveyList(): List<Survey> =
-        surveyService.list()
-
     @PostMapping("/{id}")
-    override fun giveAnswer(@PathVariable id: Long, @RequestBody answerRequest: AnswerRequest): AnswerMessage {
+    override fun giveAnswer(@PathVariable id: Long, @RequestBody answerRequest: AnswerRequest): Message {
         surveyService.create(id, answerRequest)
-        return AnswerMessage()
+        return Message("Answer")
     }
     @GetMapping
     override fun list(): List<SurveyResponse> = surveyService.list()
