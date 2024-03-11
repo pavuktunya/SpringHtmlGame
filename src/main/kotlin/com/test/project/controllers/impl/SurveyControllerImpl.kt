@@ -17,16 +17,14 @@ class SurveyControllerImpl (
 ) : SurveyController {
     @PostMapping("/{id}")
     override fun giveAnswer(@PathVariable id: Long, @RequestBody answerRequest: AnswerRequest): Message {
-        surveyService.create(id, answerRequest)
+        surveyService.giveAnswer(id, answerRequest)
         return Message("Answer")
     }
     @GetMapping
     override fun list(): List<SurveyResponse> = surveyService.list()
-
     @GetMapping("/{id}")
     override fun findSurveyById(@PathVariable id: Long): SurveyResponse =
         surveyService.getById(id)
-
     @PostMapping
     override fun createSurvey(@RequestBody request: SurveyRequest): SurveyResponse {
         return surveyService.create(request)

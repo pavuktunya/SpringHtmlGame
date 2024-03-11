@@ -3,5 +3,6 @@ package com.test.project.repositories.daos
 import com.test.project.repositories.entities.User
 
 interface UserDao: CommonDao<User>{
-    fun findUserByEmail(name: String): User?
+    fun findUserByEmail(email: String): User?
+    fun findUserByName(name: String): User?
 }

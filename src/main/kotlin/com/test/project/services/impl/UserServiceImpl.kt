@@ -8,6 +8,7 @@ import com.test.project.services.UserService
 import jakarta.transaction.Transactional
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException
 import org.springframework.data.jpa.repository.Modifying
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -48,5 +49,9 @@ class UserServiceImpl(
     override fun delete(id: Long) {
         val user = dao.findEntityById(id) ?: throw NotFoundException()
         dao.delete(user)
+    }
+    override fun loadUserByUsername(username: String): UserDetails {
+        val user = dao.findUserByName(username)!!
+        return User(user.name, user.password, null)
     }
 }

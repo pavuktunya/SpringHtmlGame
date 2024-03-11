@@ -1,5 +1,6 @@
 package com.test.project.controllers.impl
 
+import com.test.project.controllers.UserController
 import com.test.project.model.message.DeletedMessage
 import com.test.project.model.request.UserRequest
 import com.test.project.model.response.UserResponse
@@ -10,24 +11,22 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/admin/user")
 class UserControllerImpl (
-    private val adminUserService: UserService,
-) : AdminUserController {
+    private val userService: UserService
+) : UserController {
     @GetMapping
-    override fun list(): List<UserResponse> = adminUserService.list()
-
+    override fun list(): List<UserResponse> = userService.list()
+    override fun create(request: UserRequest): UserResponse = userService.create(request)
     //find user data by id
     @GetMapping("/{id}")
-    override fun getUserById(@PathVariable id: Long): UserResponse = adminUserService.getById(id)
-
+    override fun getById(@PathVariable id: Long): UserResponse = userService.getById(id)
     //update user data
     @PutMapping("/{id}")
-    override fun updateUser(@PathVariable id: Long, @RequestBody request: UserRequest): UserResponse =
-        adminUserService.update(id, request)
-
+    override fun update(@PathVariable id: Long, @RequestBody request: UserRequest)
+    : UserResponse = userService.update(id, request)
     //delete user data
     @DeleteMapping("/{id}")
-    override fun deleteUser(@PathVariable id: Long): DeletedMessage {
-        adminUserService.delete(id)
+    override fun delete(@PathVariable id: Long): DeletedMessage {
+        userService.delete(id)
         return DeletedMessage("User")
     }
 }

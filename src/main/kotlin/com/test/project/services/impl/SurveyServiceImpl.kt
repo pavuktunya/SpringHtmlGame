@@ -1,4 +1,4 @@
-package com.server.restful_polls.service.impl
+package com.test.project.services.impl
 
 import com.test.project.model.mapper.AnswerMapper
 import com.test.project.model.mapper.SurveyMapper
@@ -21,11 +21,11 @@ class SurveyServiceImpl(
 ) : SurveyService {
     override fun list(): List<SurveyResponse> {
         val surveys = surveyDao.findAll()
-        return surveys.map { surveyMapper.asResponse(it) }
+        return surveys.map { surveyMapper.asResponse(it, listOf()) }
     }
     override fun getById(entityId: Long): SurveyResponse {
         val survey = surveyDao.findEntityById(entityId) ?: throw Exception("Not found")
-        val answerList = answerDao.findAnswersBySurveyId(survey.id).map { it.answer }
+        val answerList = answerDao.findAnswersBySurveyId(survey.id)
         return surveyMapper.asResponse(survey, answerList)
     }
     @Transactional
@@ -40,7 +40,7 @@ class SurveyServiceImpl(
         answerDao.findAnswersBySurveyId(entityId).forEach { answerDao.delete(it) }
         surveyDao.delete(survey)
     }
-    override fun giveAnswer(id: Long, answerRequest: AnswerRequest) {
+    override fun giveAnswer(id: Long, answerRequest: AnswerRequest): SurveyResponse {
         val survey = surveyDao.findEntityById(id) ?: throw Exception("Not found")
         answerMapper.asEntity(answerRequest, survey).also { answerDao.save(it) }
         return surveyMapper.asResponse(survey, listOf())

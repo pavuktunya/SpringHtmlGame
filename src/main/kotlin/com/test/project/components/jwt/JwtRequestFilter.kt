@@ -1,5 +1,7 @@
 package com.test.project.components.jwt
 
+import com.test.project.services.UserService
+import com.test.project.services.impl.UserServiceImpl
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -12,7 +14,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 @Component
 class JwtRequestFilter(
     private val jwtUtils: JwtUtils,
-    private val userDetailsService: UserDetailsServiceImpl,
+    private val userService: UserService
 ) : OncePerRequestFilter() {
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -28,10 +30,10 @@ class JwtRequestFilter(
             email = jwtUtils.extractEmail(token)
         }
         if (token != null && email!= null && SecurityContextHolder.getContext().authentication == null) {
-            val userDetails = userDetailsService.loadUserByUsername(email)
-            if (userDetails != null && jwtUtils.validateToken(token, userDetails)) {
+            val user = userService.getByEmail(email)
+            if (jwtUtils.validateToken(token, user.name)) {
                 val authentication = UsernamePasswordAuthenticationToken(
-                    userDetails, "", userDetails.authorities
+                    user, "", null
                 )
                 authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
                 SecurityContextHolder.getContext().authentication = authentication

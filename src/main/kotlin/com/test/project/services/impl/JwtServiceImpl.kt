@@ -1,4 +1,4 @@
-package com.server.restful_polls.service.impl
+package com.test.project.services.impl
 
 import com.test.project.components.jwt.JwtUtils
 import com.test.project.model.request.UserRequest

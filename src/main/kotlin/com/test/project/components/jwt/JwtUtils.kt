@@ -26,8 +26,8 @@ class JwtUtils {
             .compact()
     }
     //validate token
-    fun validateToken(token: String, userDetails: UserDetails): Boolean {
-        return extractEmail(token) == userDetails.username && !isTokenExpired(token)
+    fun validateToken(token: String, name: String): Boolean {
+        return extractEmail(token) == name && !isTokenExpired(token)
     }
     //load email from payload
     fun extractEmail(token: String): String {
